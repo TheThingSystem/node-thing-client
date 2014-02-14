@@ -1,0 +1,27 @@
+{
+  "name"           : "thing-client"
+, "version"        : "0.2.0"
+, "description"    : "A node.js module to interface with TheThingSystem steward, as a thing."
+, "author"         : {
+    "name"         : "Marshall Rose"
+  , "email"        : "mrose17@gmail.com"
+  }
+, "repository"     : {
+    "type"         : "git"
+  , "url"          : "https://github.com/TheThingSystem/node-thing-client.git"
+  }
+, "bugs"           : {
+    "url"          : "https://github.com/TheThingSystem/node-thing-client/issues"
+  }
+, "keywords"       : [ "nat", "cloud", "taas", "rendezvous" ]
+, "main"           : "./thing-client.js"
+, "engines"        : {
+    "node"         : ">=0.10"
+  }
+, "dependencies"   : {
+    "mdns"         : "git://github.com/TheThingSystem/node_mdns.git"
+  , "speakeasy"    : "git://github.com/TheThingSystem/speakeasy.git"
+  , "ws"           : "git://github.com/TheThingSystem/ws.git"
+  }
+, "readmeFilename" : "README.md"
+}
