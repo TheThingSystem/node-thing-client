@@ -3,21 +3,14 @@ var ThingAPI = require('./thing-client')
 
 new ThingAPI.ThingAPI(
 { steward : { crtPath   : 'server.crt' }
-, pairing : { thingUUID : 'dummy' + Math.round((Math.random() * (10000000 - 10) + 10) * 1000)
+, pairing : { thingUUID : 'testing0'
             }
-, state   : { params    : { algorithm : "sha1"
-                          , length    : 40
-                          , name      : "dummy3@arden-arcade"
-                          , issuer    : "arden-arcade"
-                          , step      : 30
-                          , base32    : "IRNFQOKIK4YUKRKFIJIXENBUHBCVA43OIVZTKYSNKFITA5C2KBUDCUDSJFCDMRRT"
-                          , protocol  : "totp"
-                          }
-            , thingID   : "12"
-            }
+, state   : null
 }).on('ready', function(state) {
   console.log('ready state='+ JSON.stringify(state));
 
+
+// when you get the value of state, then put it above and comment out 'pairing'
 }).on('close', function() {
   console.log('close');
   process.exit(0);
