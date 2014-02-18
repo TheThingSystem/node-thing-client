@@ -9,7 +9,7 @@ This package implements a node.js module for the
 Install
 -------
 
-    npm install node-thing-client
+    npm install thing-client
 
 API
 ---
