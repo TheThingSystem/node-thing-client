@@ -1,6 +1,17 @@
 var ThingAPI = require('./thing-client')
   ;
 
+/*
+   get a copy of server.crt from your steward, it's the file
+
+       steward/steward/sandbox/server.crt
+
+   also known as
+
+       http://steward.local/server.crt
+ */
+
+
 new ThingAPI.ThingAPI(
 { steward : { crtPath   : 'server.crt' }
 , pairing : { thingUUID : 'testing0'
