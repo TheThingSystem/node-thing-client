@@ -171,14 +171,13 @@ ThingAPI.prototype._channel = function(self) {
 
     if (!!self.options.pairing) return self._pair();
 
-    return self.emit('error', new Error('no pairing information'));
-     
+    return self.emit('error', new Error('no pairing information'));     
   }).on('message', function(data, flags) {
     var callback, doneP, message, requestID;
 
-    if ((!!flags) && (flags.binary === true)) return self.emit(new Error('binary message'));
+    if ((!!flags) && (flags.binary === true)) return self.emit('error', new Error('binary message'));
 
-    try { message = JSON.parse(data.toString()); } catch(ex) {return self.emit(new Error('error parsing message')); }
+    try { message = JSON.parse(data.toString()); } catch(ex) {return self.emit('error', new Error('error parsing message')); }
 
     if (!!message.path) return self.emit('message', message);
 
