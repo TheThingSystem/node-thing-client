@@ -37,7 +37,7 @@ or the actual certificate itself (steward.crtData).
 The very first time that your thing talks to the steward, it must pair.
 In order to pair, you must provide, at a minimum, a UUID for the thing.
 In addition, if the steward is configured to require a pairing code, then that too must be supplied.
-When the 'ready' event is emitted,
+When the 'paired' event is emitted,
 it is passes a state variable that should be used as a parameter the next time the API is started.
 
 The API does not attempt to recover on either a close, or error.
@@ -54,9 +54,9 @@ Instead, you may choose to start over or exit, as you see fit.
     /*
     , state   : state
      */
-    }).on('ready', function(state) {
+    }).on('paired', function(state) {
       // save state to pass as option for the future
-
+    }).on('ready', function() {
       // ok, let's get to work!
     }).on('close', function() {
       // typically, just log and recover/exit

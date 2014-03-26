@@ -1,6 +1,6 @@
 {
   "name"           : "thing-client"
-, "version"        : "0.2.2"
+, "version"        : "0.3.0"
 , "description"    : "A node.js module to interface with TheThingSystem steward, as a thing."
 , "author"         : {
     "name"         : "Marshall Rose"
@@ -13,7 +13,7 @@
 , "bugs"           : {
     "url"          : "https://github.com/TheThingSystem/node-thing-client/issues"
   }
-, "keywords"       : [ "nat", "cloud", "taas", "rendezvous" ]
+, "keywords"       : [ "STP", "simple thing protocol" ]
 , "main"           : "./thing-client.js"
 , "engines"        : {
     "node"         : ">=0.10"

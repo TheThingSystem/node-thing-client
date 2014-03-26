@@ -220,6 +220,8 @@ ThingAPI.prototype._pair = function() {
     self.params = message.result.params;
     delete(message.result.success);
 
+    self.emit('paired', { thingID: self.thingID, params: self.params });
+
     self._hello();
   }, false);
 };
@@ -238,7 +240,7 @@ ThingAPI.prototype._hello = function() {
   return self._send(json, function(message) {
     if (!!message.error) return self.emit('error', new Error(message.error.diagnostic), message.error);
 
-    self.emit('ready', { thingID: self.thingID, params: self.params });
+    self.emit('ready');
   });
 };
 

@@ -17,10 +17,12 @@ new ThingAPI.ThingAPI(
 , pairing : { thingUUID : 'testing0'
             }
 , state   : null
-}).on('ready', function(state) {
-  console.log('ready state='+ JSON.stringify(state));
+}).on('paired', function(state) {
+  console.log('paired state='+ JSON.stringify(state));
 
 // when you get the value of state, then put it above and comment out 'pairing'
+}).on('ready', function() {
+  console.log('ok, time to get to work!');
 }).on('message', function(message) {
   console.log(require('util').inspect(message, { depth: null }));
 }).on('close', function() {
