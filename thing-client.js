@@ -178,6 +178,7 @@ ThingAPI.prototype._channel = function(self) {
     if ((!!flags) && (flags.binary === true)) return self.emit('error', new Error('binary message'));
 
     try { message = JSON.parse(data.toString()); } catch(ex) {return self.emit('error', new Error('error parsing message')); }
+    self.logger.debug('>>> recv: ' + JSON.stringify(message));
 
     if (!!message.path) return self.emit('message', message);
 
@@ -189,7 +190,7 @@ ThingAPI.prototype._channel = function(self) {
 
     doneP = (self.callbacks[requestID].times-- < 2) || (!!message.error);
     if (doneP) delete(self.callbacks[requestID]);
-    callback(message, doneP);
+    if (!!callback) return callback(message, doneP);
   }).on('close', function() {
     self.emit('close');
   }).on('error', function(err) {
@@ -223,7 +224,7 @@ ThingAPI.prototype._pair = function() {
     self.emit('paired', { thingID: self.thingID, params: self.params });
 
     self._hello();
-  }, false);
+  });
 };
 
 ThingAPI.prototype._hello = function() {
@@ -250,6 +251,7 @@ ThingAPI.prototype._send = function(json, callback, onceP) {
   if (!self.channel) throw new Error('channel not open');
 
   json.requestID = self.addCallback(callback, onceP ? 1 : 2);
+  self.logger.debug('>>> send: ' + JSON.stringify(json));
   self.channel.send(JSON.stringify(json));
 
   return self;
@@ -257,27 +259,38 @@ ThingAPI.prototype._send = function(json, callback, onceP) {
 
 
 ThingAPI.prototype.prototype = function(things, cb) {
-  return this._send({ path      : '/api/v1/thing/prototype/'
+  return this._send({ path      : '/api/v1/thing/prototype'
                     , things    : things
-                    }, cb);
+                    }, cb, true);
 };
 
 ThingAPI.prototype.register = function(things, cb) {
-  return this._send({ path      : '/api/v1/thing/register/'
+  return this._send({ path      : '/api/v1/thing/register'
                     , things    : things
-                    }, cb);
+                    }, cb, true);
 };
 
 ThingAPI.prototype.update = function(things, cb) {
-  return this._send({ path      : '/api/v1/thing/prototype/'
+  return this._send({ path      : '/api/v1/thing/update'
                     , things    : things
-                    }, cb);
+                    }, cb, true);
 };
 
 ThingAPI.prototype.report = function(events, cb) {
-  return this._send({ path      : '/api/v1/thing/report/'
-                    , events    : events
-                    }, cb);
+    return this._send({ path      : '/api/v1/thing/report'
+                      , events    : events
+                      }, cb, true);
+};
+
+ThingAPI.prototype.reply = function(response) {
+  var self = this;
+
+  if (!self.channel) throw new Error('channel not open');
+
+  self.logger.debug('>>> send: ' + JSON.stringify(response));
+  self.channel.send(JSON.stringify(response));
+
+  return self;
 };
 
 
