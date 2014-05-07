@@ -257,7 +257,8 @@ var getToWork = function(thing, thingID) {
                   thing.reply(response);
                 }
             }[message.path];
-    if (!f) return console.log ('invalid message: ' + JSON.stringify(message));
-    f(thing, thingID, message);    
+    if (!!f) return f();
+
+    console.log('invalid message: ' + JSON.stringify(message));
   });
 };
