@@ -110,11 +110,13 @@ var ThingAPI = function(options) {
 
   if (!self.options.steward) self.options.steward = {};
 
-  setTimeout(function() {
+  self.timer = setInterval(function() {
     var didP, entry, host;
 
     if ((self.options.steward.name === '127.0.0.1') || (self.options.steward.name === 'localhost')) {
       self.params.url = 'ws://localhost:8887';
+
+      clearInterval(self.timer);
       return self._channel(self);
     }
 
@@ -137,10 +139,14 @@ var ThingAPI = function(options) {
         self.params.url = 'wss://' + entry.host + ':' + entry.port;
       }
 
+      clearInterval(self.timer);
       return self._channel(self);
     }
 
-    return self.emit('error', new Error(didP ? 'no matching stewards' : 'no visible stewards'));
+    if (!didP) return;
+
+    clearInterval(self.timer);
+    return self.emit('error', new Error('no matching stewards'));
   }, 250);
 
   return self;
