@@ -1,6 +1,6 @@
 {
   "name"           : "thing-client"
-, "version"        : "0.5.2"
+, "version"        : "0.5.3"
 , "description"    : "A node.js module to interface with TheThingSystem steward, as a thing."
 , "author"         : {
     "name"         : "Marshall Rose"
@@ -19,7 +19,7 @@
     "node"         : ">=0.10"
   }
 , "dependencies"   : {
-  , "mdns"         : "2.2.0"
+    "mdns"         : "2.2.0"
   , "speakeasy"    : "git://github.com/TheThingSystem/speakeasy.git"
   , "ws"           : "git://github.com/TheThingSystem/ws.git"
   }
