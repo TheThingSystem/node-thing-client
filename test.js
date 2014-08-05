@@ -195,7 +195,9 @@ var getToWork = function(thing, thingID) {
                     event = message.events[eventID];
 
                     if (event.observe !== 'motion') {
-                      response.events[eventID] = { error: { permanent: true, diagnostic: 'invalid observe value' }};
+                      response.events[eventID] = { error: { permanent: true, diagnostic: 'invalid observe value' }
+                                                 , reason: 'observe'
+                                                 };
                       continue;
                     }
                     if (!event.testOnly) observe[eventID] = event;
@@ -215,15 +217,19 @@ var getToWork = function(thing, thingID) {
                     event = message.events[eventID];
 
                     if (event.reason !== 'cancel') {
-                      response.events[eventID] = { error: { permanent: true, diagnostic: 'invalid reason' }};
+                      response.events[eventID] = { error: { permanent: true, diagnostic: 'invalid reason' }
+                                                 , reason: 'observe'
+                                                 };
                       continue;
                     }
                     if (!!observe[eventID]) {
-                      response.events[eventID] = { error: { permanent: true, diagnostic: 'invalid eventID' }};
+                      response.events[eventID] = { error: { permanent: true, diagnostic: 'invalid eventID' }
+                                                 , reason: 'observe'
+                                                 };
                       continue;
                     }
                     delete(observe[eventID]);
-                    response.events[eventID] = { success: true };
+                    response.events[eventID] = { status: 'success' };
                   }
 
                   thing.reply(response);
@@ -239,15 +245,19 @@ var getToWork = function(thing, thingID) {
                     task = message.tasks[taskID];
 
                     if (task.perform !== 'speak') {
-                      response.tasks[taskID] = { error: { permanent: true, diagnostic: 'invalid perform value' }};
+                      response.tasks[taskID] = { error: { permanent: true, diagnostic: 'invalid perform value' }
+                                               , reason: 'failure'
+                                               };
                       continue;
                     }
                     if ((!task.parameter) || (typeof task.parameter !== 'string') || (task.parameter.length === 0)) {
-                      response.tasks[taskID] = { error: { permanent: true, diagnostic: 'invalid parameter value' }};
+                      response.tasks[taskID] = { error: { permanent: true, diagnostic: 'invalid parameter value' }
+                                               , reason: 'failure'
+                                               };
                       continue;
                     }
                     if (task.testOnly) {
-                      response.tasks[taskID] = { success: true };
+                      response.tasks[taskID] = { status: 'success' };
                       continue;
                     }
 

@@ -255,6 +255,8 @@ ThingAPI.prototype._send = function(json, callback, onceP) {
   var self = this;
 
   if (!self.channel) throw new Error('channel not open');
+  if (typeof callback === 'undefined') callback = function() {};
+  if (typeof callback !== 'function') throw new Error('callback must be function');
 
   json.requestID = self.addCallback(callback, onceP ? 1 : 2);
   self.logger.debug('>>> send: ' + JSON.stringify(json));
