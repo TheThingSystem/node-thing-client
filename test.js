@@ -178,7 +178,7 @@ var getToWork = function(thing, thingID) {
 
       if (!message.events) return;
       for (eventID in message.events) if (message.events.hasOwnProperty(eventID)) {
-        if (message.events[eventID].status === 'success') delete(observe[eventID]);
+        if (message.events[eventID].status !== 'success') delete(observe[eventID]);
       }      
     });
   }, 30 * 1000);
@@ -201,7 +201,7 @@ var getToWork = function(thing, thingID) {
                       continue;
                     }
                     if (!event.testOnly) observe[eventID] = event;
-                    response.events[eventID] = { success: true };
+                    response.events[eventID] = { status: 'proceed' };
                   }
 
                   thing.reply(response);
